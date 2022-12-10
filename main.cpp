@@ -12,7 +12,7 @@ struct hashMap {
     int collisions = 0;
 
     // The key is calculated by calculating hash % size
-    int key = (hash + collisions) % size;
+    int key = hash % size;
 
     /*
     If that key already has a value, a collision will keep being 
