@@ -8,13 +8,11 @@ struct hashMap {
 
   // Returns the bucket that hash will be stored in using linear probing
   int compression(uint64_t hash) {
-    
-    // The hash value of the 
-    int hashValue = hashTable.size();
+    int size = hashTable.size();
     int collisions = 0;
 
-    // The key is calculated by calculating hash % hashValue
-    int key = (hash + collisions) % hashValue;
+    // The key is calculated by calculating hash % size
+    int key = (hash + collisions) % size;
 
     /*
     If that key already has a value, a collision will keep being 
@@ -22,7 +20,7 @@ struct hashMap {
     */
     while (hashTable[key] != NULL) {
       collisions++;
-      key = (hash + collisions) % hashValue;
+      key = (hash + collisions) % size;
     }
 
     // Sets the value at key to hash, and returns the key
@@ -34,7 +32,7 @@ struct hashMap {
 int main() {
   hashMap test;
   test.hashTable.resize(11);
-
+  
   // Ten inputs that won't have collisions
   std::cout << "Ten inputs that won't have collisions:\n"<< std::endl;
   for (int i = 1; i < 11; i++) {
