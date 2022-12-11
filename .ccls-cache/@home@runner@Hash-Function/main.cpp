@@ -5,12 +5,19 @@
 struct hashMap {
   // Hash table implemented as an int vector
   std::vector<int> hashTable;
+  int elements = 0;
 
   // Returns the bucket that hash will be stored in using linear probing
   int compression(uint64_t hash) {
     int size = hashTable.size();
     int collisions = 0;
 
+    // If the hash table is full, resize before finding the bucket
+    if (elements == size) {
+      hashTable.resize(size * 2);
+      size = hashTable.size();
+    }
+    
     // The key is calculated by calculating hash % size
     int key = hash % size;
 
@@ -19,12 +26,14 @@ struct hashMap {
     added to the key, until a key without a value is found
     */
     while (hashTable[key] != NULL) {
+      
       collisions++;
       key = (hash + collisions) % size;
     }
 
     // Sets the value at key to hash, and returns the key
     hashTable[key] = hash;
+    elements++;
     return key;
   }
 };
