@@ -26,7 +26,6 @@ struct hashMap {
     added to the key, until a key without a value is found
     */
     while (hashTable[key] != NULL) {
-      
       collisions++;
       key = (hash + collisions) % size;
     }
